@@ -26,3 +26,32 @@ exports.findByID = function (req, res) {
     })
 };
 
+exports.update = function (req, res) {
+    Movie.findById(req.params.id, function (err, movie) {
+        movie.name = req.body.name;
+        movie.save((err) => {
+            res.json({
+                status: 'SUCCESS',
+                message: 'Updated Movie Successfully'
+            });
+        });
+    })
+};
+
+exports.delete = function (req, res) {
+    Movie.remove({ _id: req.params.id }, function(err) {
+        if (!err) {
+            res.json({
+                status: 'SUCCESS',
+                message: 'Deleted Movie Successfully'
+            });
+        }
+        else {
+            res.json({
+                status: 'ERROR',
+                message: 'Error Deleting'
+            });
+        }
+    });
+};
+
